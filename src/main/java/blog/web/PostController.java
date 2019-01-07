@@ -2,6 +2,7 @@ package blog.web;
 
 
 import blog.models.Post;
+import blog.services.PostServiceImpl;
 import blog.services.base.PostService;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,12 +28,18 @@ public class PostController {
 
 
     public PostController() {
-        posts = new ArrayList<>();
+        this(new PostServiceImpl());
     }
+
+    public PostController(PostService postService){
+        this.postService = postService;
+    }
+
 
     @RequestMapping("/")
     public List<Post> listPosts() {
-        return posts;
+        return postService.listPosts();
+//        return posts;
     }
 
     @RequestMapping(
@@ -41,10 +48,11 @@ public class PostController {
     )
     public Post findById(@PathVariable("id") String idString) {
         int id = Integer.parseInt(idString);
-        return posts.stream()
-                .filter(post -> post.getId() == id)
-                .findFirst()
-                .orElse(null);
+        return postService.findById(id);
+//        return posts.stream()
+//                .filter(post -> post.getId() == id)
+//                .findFirst()
+//                .orElse(null);
     }
 
     @RequestMapping(
@@ -52,13 +60,14 @@ public class PostController {
             method = RequestMethod.POST
     )
     public void addPost(@RequestBody Post post) {
-        int maxId = posts.stream()
-                .mapToInt(Post::getId)
-                .max()
-                .orElse(0);
-        int newId = maxId + 1;
-        post.setId(newId);
-        posts.add(post);
+        postService.create(post);
+//        int maxId = posts.stream()
+//                .mapToInt(Post::getId)
+//                .max()
+//                .orElse(0);
+//        int newId = maxId + 1;
+//        post.setId(newId);
+//        posts.add(post);
     }
 
     @RequestMapping(
@@ -66,8 +75,11 @@ public class PostController {
             method = RequestMethod.PUT
     )
     public void update(@PathVariable("id") String idString, @RequestBody Post updatePost) {
-        Post post = findById(idString);
-        post.setText(updatePost.getText());
+        int id = Integer.parseInt(idString);
+        postService.update(id, updatePost);
+
+//        Post post = findById(idString);
+//        post.setText(updatePost.getText());
     }
 
     @RequestMapping(
