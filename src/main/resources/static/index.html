@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            background-color: aqua;
+            text-decoration: underline;
+        }
+    </style>
+
+
+</head>
+<body>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+<script>
+    $.get("/api/messages", function (messages) {
+        messages.forEach(function (msg) {
+            $("<div/>")
+                .html(msg)
+                .appendTo(document.body);
+        });
+    });
+</script>
+</body>
+</html>
