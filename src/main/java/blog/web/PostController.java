@@ -27,12 +27,11 @@ public class PostController {
     private PostService postService;
 
 
-    public PostController() {
-        this(new PostServiceImpl());
+    public PostController(PostService postService) {
+        this.postService = postService;
     }
 
-    public PostController(PostService postService){
-        this.postService = postService;
+    public PostController(){
     }
 
 

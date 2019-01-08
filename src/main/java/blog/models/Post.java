@@ -4,6 +4,14 @@ public class Post {
     private int id;
     private String text;
 
+    public Post() {
+
+    }
+
+    public Post(int id, String text){
+
+    }
+
     public String getText() {
         return text;
     }
