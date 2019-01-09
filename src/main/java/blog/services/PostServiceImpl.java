@@ -1,5 +1,6 @@
 package blog.services;
 
+import blog.data.InMemoryGenericRepository;
 import blog.data.base.GenericRepository;
 import blog.models.Post;
 import blog.services.base.PostService;
@@ -8,14 +9,14 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class PostServiceImpl implements PostService {
-    private GenericRepository<Post> postRepository;
+    private final GenericRepository<Post> postRepository;
 
     public PostServiceImpl(GenericRepository<Post> postRepository) {
         this.postRepository = postRepository;
     }
 
     public PostServiceImpl() {
-
+        this(new InMemoryGenericRepository());
     }
 
     @Override
